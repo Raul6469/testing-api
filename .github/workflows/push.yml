@@ -1,0 +1,29 @@
+name: Push test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update: 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.DENIS_ACCESS_TOKEN }}
+        fetch-depth: 0
+
+    - name: Setup git
+      run: |
+        git config --global user.email "61004423+denis-brogniapp[bot]@users.noreply.github.com"
+        git config --global user.name "Denis Brogniapp"
+
+    - name: Push a commit
+      run: |
+        echo hey >> test.txt
+        git add .
+        git commit -m "Test from GitHub actions"
+        git push
